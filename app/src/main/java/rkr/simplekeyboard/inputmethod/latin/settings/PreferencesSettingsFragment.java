@@ -44,7 +44,7 @@ public final class PreferencesSettingsFragment extends SubScreenFragment {
         super.onCreate(icicle);
         addPreferencesFromResource(R.xml.prefs_screen_preferences);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.BAKLAVA) {
+        if (Build.VERSION.SDK_INT < 36 /* Build.VERSION_CODES.BAKLAVA */) {
             removePreference(Settings.PREF_USE_ON_SCREEN);
         }
     }
