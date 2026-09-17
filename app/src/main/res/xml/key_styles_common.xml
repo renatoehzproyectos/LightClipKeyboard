@@ -104,6 +104,20 @@
         latin:keyActionFlags="noKeyPreview|altCodeWhileTyping"
         latin:altCode="!code/key_paste"
         latin:backgroundType="functional" />
+    <!-- LightClip: emoji panel key -->
+    <key-style
+        latin:styleName="emojiKeyStyle"
+        latin:keySpec="&#x263A;|!code/key_emoji"
+        latin:keyLabelFlags="preserveCase|followFunctionalTextColor"
+        latin:keyActionFlags="noKeyPreview"
+        latin:backgroundType="functional" />
+    <!-- LightClip: clipboard / notes panel key -->
+    <key-style
+        latin:styleName="clipboardKeyStyle"
+        latin:keySpec="&#x1F4CB;|!code/key_clipboard"
+        latin:keyLabelFlags="preserveCase|followFunctionalTextColor"
+        latin:keyActionFlags="noKeyPreview"
+        latin:backgroundType="functional" />
     <key-style
         latin:styleName="languageSwitchKeyStyle"
         latin:keySpec="!icon/language_switch_key|!code/key_language_switch"

@@ -509,7 +509,103 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     }
 
     void onFinishInputViewInternal(final boolean finishingInput) {
+        hideLightClipPanel();
         super.onFinishInputView(finishingInput);
+    }
+
+    // ---------------- LightClip panels (emoji / clipboard) ----------------
+
+    private View mLightClipPanel;
+
+    public boolean isLightClipPanelShowing() {
+        return mLightClipPanel != null;
+    }
+
+    private void showLightClipPanel(final View panel) {
+        hideLightClipPanel();
+        if (!(mInputView instanceof android.view.ViewGroup)) {
+            return;
+        }
+        final MainKeyboardView keyboardView = mKeyboardSwitcher.getMainKeyboardView();
+        int height = 0;
+        if (keyboardView != null) {
+            height = keyboardView.getHeight();
+        }
+        if (height <= 0) {
+            height = mInputView.getHeight();
+        }
+        if (height <= 0) {
+            height = LayoutParams.WRAP_CONTENT;
+        }
+        if (keyboardView != null) {
+            keyboardView.closing();
+            keyboardView.setVisibility(View.INVISIBLE);
+        }
+        ((android.view.ViewGroup) mInputView).addView(panel,
+                new android.widget.FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
+        mLightClipPanel = panel;
+    }
+
+    public void hideLightClipPanel() {
+        if (mLightClipPanel != null && mInputView instanceof android.view.ViewGroup) {
+            ((android.view.ViewGroup) mInputView).removeView(mLightClipPanel);
+        }
+        mLightClipPanel = null;
+        final MainKeyboardView keyboardView = mKeyboardSwitcher.getMainKeyboardView();
+        if (keyboardView != null) {
+            keyboardView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(final int keyCode, final KeyEvent keyEvent) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && isLightClipPanelShowing()) {
+            hideLightClipPanel();
+            return true;
+        }
+        return super.onKeyDown(keyCode, keyEvent);
+    }
+
+    private void showEmojiPanel() {
+        final rkr.simplekeyboard.inputmethod.emoji.EmojiPickerView view =
+                new rkr.simplekeyboard.inputmethod.emoji.EmojiPickerView(this);
+        view.setListener(new rkr.simplekeyboard.inputmethod.emoji.EmojiPickerView.Listener() {
+            @Override
+            public void onEmojiSelected(final String emoji) {
+                final android.view.inputmethod.InputConnection ic = getCurrentInputConnection();
+                if (ic != null && emoji != null) {
+                    ic.commitText(emoji, 1);
+                }
+            }
+
+            @Override
+            public void onClose() {
+                hideLightClipPanel();
+            }
+        });
+        showLightClipPanel(view);
+    }
+
+    private void showClipboardPanel() {
+        final rkr.simplekeyboard.inputmethod.clipboard.ClipboardView view =
+                new rkr.simplekeyboard.inputmethod.clipboard.ClipboardView(this);
+        view.setListener(new rkr.simplekeyboard.inputmethod.clipboard.ClipboardView.Listener() {
+            @Override
+            public void onInsertRequested(
+                    final rkr.simplekeyboard.inputmethod.clipboard.ClipboardItem item) {
+                final android.view.inputmethod.InputConnection ic = getCurrentInputConnection();
+                if (ic != null && item != null && item.text != null) {
+                    rkr.simplekeyboard.inputmethod.paste.SmartPasteEngine.paste(ic, item.text, null);
+                }
+                hideLightClipPanel();
+            }
+
+            @Override
+            public void onClose() {
+                hideLightClipPanel();
+            }
+        });
+        showLightClipPanel(view);
     }
 
     protected void deallocateMemory() {
@@ -750,6 +846,23 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     @Override
     public void onCodeInput(final int codePoint, final int x, final int y,
             final boolean isKeyRepeat) {
+        // LightClip: panel keys are handled here and never reach the input logic.
+        if (codePoint == Constants.CODE_EMOJI) {
+            if (isLightClipPanelShowing()) {
+                hideLightClipPanel();
+            } else {
+                showEmojiPanel();
+            }
+            return;
+        }
+        if (codePoint == Constants.CODE_CLIPBOARD) {
+            if (isLightClipPanelShowing()) {
+                hideLightClipPanel();
+            } else {
+                showClipboardPanel();
+            }
+            return;
+        }
         final Event event = createSoftwareKeypressEvent(getCodePointForKeyboard(codePoint), isKeyRepeat);
         onEvent(event);
     }
