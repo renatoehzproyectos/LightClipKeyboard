@@ -21,6 +21,7 @@
     <!-- <uses-permission android:name="android.permission.INTERNET" /> -->
 
     <application
+        android:name=".diagnostic.DiagnosticApplication"
         android:allowBackup="true"
         android:fullBackupOnly="true"
         android:icon="@drawable/ic_launcher"
@@ -45,6 +46,12 @@
         <activity
             android:name=".latin.settings.SettingsActivity"
             android:label="@string/english_ime_name"
+            android:exported="true"
+            android:theme="@style/platformSettingsTheme" />
+
+        <activity
+            android:name=".diagnostic.DiagnosticActivity"
+            android:label="LightClip Diagnostics"
             android:exported="true"
             android:theme="@style/platformSettingsTheme">
             <intent-filter>
