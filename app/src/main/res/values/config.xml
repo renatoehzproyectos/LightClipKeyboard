@@ -40,19 +40,19 @@
     <fraction name="config_keyboard_bottom_padding">2.335%p</fraction>
     <fraction name="config_keyboard_left_padding">0.870%p</fraction>
     <fraction name="config_keyboard_right_padding">0.870%p</fraction>
-    <fraction name="config_key_vertical_gap">6.905%p</fraction>
-    <fraction name="config_key_horizontal_gap">1.739%p</fraction>
+    <fraction name="config_key_vertical_gap">6.2%p</fraction>
+    <fraction name="config_key_horizontal_gap">1.55%p</fraction>
     <!-- config_more_keys_keyboard_key_height x -0.5 -->
     <dimen name="config_more_keys_keyboard_vertical_correction">-26.4dp</dimen>
     <dimen name="config_key_preview_offset_lxx">55dp</dimen>
-    <dimen name="config_key_preview_height_lxx">122dp</dimen>
+    <dimen name="config_key_preview_height_lxx">116dp</dimen>
     <dimen name="config_key_preview_width_lxx">0dp</dimen>
     <fraction name="config_key_preview_text_ratio">82%</fraction>
-    <fraction name="config_key_letter_ratio_lxx">55%</fraction>
+    <fraction name="config_key_letter_ratio_lxx">58%</fraction>
     <fraction name="config_key_large_letter_ratio_lxx">90%</fraction>
-    <fraction name="config_key_label_ratio_lxx">34%</fraction>
-    <fraction name="config_key_hint_letter_ratio_lxx">25%</fraction>
-    <fraction name="config_key_hint_label_ratio_lxx">30%</fraction>
+    <fraction name="config_key_label_ratio_lxx">36%</fraction>
+    <fraction name="config_key_hint_letter_ratio_lxx">22%</fraction>
+    <fraction name="config_key_hint_label_ratio_lxx">28%</fraction>
     <fraction name="config_key_shifted_letter_hint_ratio_lxx">35%</fraction>
     <fraction name="config_language_on_spacebar_text_ratio">33.735%</fraction>
     <dimen name="config_key_hint_letter_padding">3dp</dimen>

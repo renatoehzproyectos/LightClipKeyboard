@@ -35,6 +35,13 @@
         <attr name="popupPanelBackgroundColor" format="color" />
         <attr name="keyPressedBackgroundColor" format="color" />
         <attr name="keyNormalBackgroundColor" format="color" />
+        <!-- LightClip v8: Material 3 tones -->
+        <attr name="keyFunctionalBackgroundColor" format="color" />
+        <attr name="keyAccentBackgroundColor" format="color" />
+        <attr name="keyAccentPressedBackgroundColor" format="color" />
+        <attr name="keyOnAccentColor" format="color" />
+        <attr name="panelSurfaceColor" format="color" />
+        <attr name="panelOutlineColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="KeyboardView">

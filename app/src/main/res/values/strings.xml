@@ -84,12 +84,12 @@
     <!-- Description for Hcesar keyboard layout. -->
     <string name="subtype_hcesar">HCESAR</string>
 
-    <string name="keyboard_theme_dark_border" translatable="false">Material Dark Border</string>
-    <string name="keyboard_theme_light_border" translatable="false">Material Light Border</string>
-    <string name="keyboard_theme_dark" translatable="false">Material Dark</string>
-    <string name="keyboard_theme_light" translatable="false">Material Light</string>
-    <string name="keyboard_theme_system" translatable="false">System Default</string>
-    <string name="keyboard_theme_system_border" translatable="false">System Default Border</string>
+    <string name="keyboard_theme_dark_border" translatable="false">Dark Border</string>
+    <string name="keyboard_theme_light_border" translatable="false">Light Border</string>
+    <string name="keyboard_theme_dark" translatable="false">Dark</string>
+    <string name="keyboard_theme_light" translatable="false">Light</string>
+    <string name="keyboard_theme_system" translatable="false">Material You (System)</string>
+    <string name="keyboard_theme_system_border" translatable="false">Material You Border</string>
 
     <!-- Title of the button to add a language in the settings dialog [CHAR LIMIT=15] -->
     <string name="add">Add</string>

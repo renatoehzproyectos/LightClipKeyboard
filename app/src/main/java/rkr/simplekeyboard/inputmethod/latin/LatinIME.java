@@ -541,8 +541,18 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             keyboardView.closing();
             keyboardView.setVisibility(View.INVISIBLE);
         }
-        ((android.view.ViewGroup) mInputView).addView(panel,
-                new android.widget.FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
+        if (height == LayoutParams.WRAP_CONTENT) {
+            // Keyboard not laid out yet: fall back to the configured keyboard height so the
+            // panel still has the same footprint as the keys.
+            height = ResourceUtils.getKeyboardHeight(getResources(), mSettings.getCurrent());
+        }
+        // The input view is stretched to the full screen height (see
+        // updateSoftInputWindowLayoutParameters), so the panel MUST be anchored to the bottom.
+        // Without an explicit gravity FrameLayout places children at the top of the screen.
+        final android.widget.FrameLayout.LayoutParams lp =
+                new android.widget.FrameLayout.LayoutParams(
+                        LayoutParams.MATCH_PARENT, height, Gravity.BOTTOM);
+        ((android.view.ViewGroup) mInputView).addView(panel, lp);
         mLightClipPanel = panel;
     }
 
@@ -579,6 +589,11 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             }
 
             @Override
+            public void onBackspace() {
+                onEvent(createSoftwareKeypressEvent(Constants.CODE_DELETE, false));
+            }
+
+            @Override
             public void onClose() {
                 hideLightClipPanel();
             }
@@ -598,6 +613,11 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
                     rkr.simplekeyboard.inputmethod.paste.SmartPasteEngine.paste(ic, item.text, null);
                 }
                 hideLightClipPanel();
+            }
+
+            @Override
+            public void onBackspace() {
+                onEvent(createSoftwareKeypressEvent(Constants.CODE_DELETE, false));
             }
 
             @Override

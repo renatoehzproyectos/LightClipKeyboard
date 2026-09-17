@@ -24,32 +24,56 @@
 
     <!-- Color resources for LXX_System theme. -->
     <!-- Material theme values @color/material_* are private, so they are copied here. -->
-    <color name="background_lxx_system">#fffafafa</color>
-    <color name="background_secondary_lxx_system">#fff5f5f5</color>
-    <color name="key_text_color_lxx_system">#de000000</color>
-    <color name="key_functional_text_color_lxx_system">#70000000</color>
-    <color name="key_text_inactive_color_lxx_system">#de000000</color>
-    <color name="key_hint_letter_color_lxx_system">#90000000</color>
-    <color name="key_background_normal_lxx_system">#ffd6d7d7</color>
-    <color name="key_background_pressed_lxx_system">#20000000</color>
+    <color name="background_lxx_system">#FFF2F3F5</color>
+    <color name="background_secondary_lxx_system">#FFFFFFFF</color>
+    <color name="key_text_color_lxx_system">#FF1B1C1E</color>
+    <color name="key_functional_text_color_lxx_system">#FF3C3F43</color>
+    <color name="key_text_inactive_color_lxx_system">#8A1B1C1E</color>
+    <color name="key_hint_letter_color_lxx_system">#7A1B1C1E</color>
+    <color name="key_background_normal_lxx_system">#FFFFFFFF</color>
+    <color name="key_background_pressed_lxx_system">#FFD9DCE1</color>
     <!-- Color resources for LXX_Light theme. -->
-    <color name="background_lxx_light">#ECEFF1</color>
-    <color name="background_secondary_lxx_light">#20000000</color>
-    <color name="key_text_color_lxx_light">#37474F</color>
-    <color name="key_functional_text_color_lxx_light">#CC37474F</color>
-    <color name="key_text_inactive_color_lxx_light">#B337474F</color>
-    <color name="key_hint_letter_color_lxx_light">#B337474F</color>
-    <color name="key_background_normal_lxx_light">#26080B0C</color>
-    <color name="key_background_pressed_lxx_light">#400E1214</color>
+    <color name="background_lxx_light">#FFEEF0F3</color>
+    <color name="background_secondary_lxx_light">#FFFFFFFF</color>
+    <color name="key_text_color_lxx_light">#FF1B1C1E</color>
+    <color name="key_functional_text_color_lxx_light">#FF3C3F43</color>
+    <color name="key_text_inactive_color_lxx_light">#8A1B1C1E</color>
+    <color name="key_hint_letter_color_lxx_light">#7A1B1C1E</color>
+    <color name="key_background_normal_lxx_light">#F2FFFFFF</color>
+    <color name="key_background_pressed_lxx_light">#40000000</color>
     <!-- Color resources for LXX_Dark theme. -->
-    <color name="background_lxx_dark">#263238</color>
-    <color name="background_secondary_lxx_dark">#20FFFFFF</color>
-    <color name="key_text_color_lxx_dark">#CCFFFFFF</color>
-    <color name="key_functional_text_color_lxx_dark">#CCFFFFFF</color>
-    <color name="key_text_inactive_color_lxx_dark">#80FFFFFF</color>
-    <color name="key_hint_letter_color_lxx_dark">#80FFFFFF</color>
-    <color name="key_background_normal_lxx_dark">#2AAAAAAA</color>
-    <color name="key_background_pressed_lxx_dark">#4AAAAAAA</color>
+    <color name="background_lxx_dark">#FF1E1F22</color>
+    <color name="background_secondary_lxx_dark">#FF3A3C41</color>
+    <color name="key_text_color_lxx_dark">#FFF1F2F4</color>
+    <color name="key_functional_text_color_lxx_dark">#FFDDE0E5</color>
+    <color name="key_text_inactive_color_lxx_dark">#8AF1F2F4</color>
+    <color name="key_hint_letter_color_lxx_dark">#80F1F2F4</color>
+    <color name="key_background_normal_lxx_dark">#33FFFFFF</color>
+    <color name="key_background_pressed_lxx_dark">#66FFFFFF</color>
     <!-- Dimensions for all themes. -->
-    <dimen name="button_corner_radius_lxx">6dp</dimen>
+    <dimen name="button_corner_radius_lxx">10dp</dimen>
+    <dimen name="key_preview_corner_radius_lxx">14dp</dimen>
+    <dimen name="panel_corner_radius">16dp</dimen>
+
+    <!-- LightClip v8: Material 3 role colors per theme. -->
+    <color name="key_functional_background_lxx_system">#FFDDE1E7</color>
+    <color name="key_accent_background_lxx_system">#FF0B57D0</color>
+    <color name="key_accent_pressed_background_lxx_system">#FF0842A0</color>
+    <color name="key_on_accent_lxx_system">#FFFFFFFF</color>
+    <color name="panel_surface_lxx_system">#FFFFFFFF</color>
+    <color name="panel_outline_lxx_system">#1F1B1C1E</color>
+
+    <color name="key_functional_background_lxx_light">#40000000</color>
+    <color name="key_accent_background_lxx_light">#FF0B57D0</color>
+    <color name="key_accent_pressed_background_lxx_light">#FF0842A0</color>
+    <color name="key_on_accent_lxx_light">#FFFFFFFF</color>
+    <color name="panel_surface_lxx_light">#B3FFFFFF</color>
+    <color name="panel_outline_lxx_light">#1F000000</color>
+
+    <color name="key_functional_background_lxx_dark">#1AFFFFFF</color>
+    <color name="key_accent_background_lxx_dark">#FFA8C7FA</color>
+    <color name="key_accent_pressed_background_lxx_dark">#FF7CACF8</color>
+    <color name="key_on_accent_lxx_dark">#FF062E6F</color>
+    <color name="panel_surface_lxx_dark">#1AFFFFFF</color>
+    <color name="panel_outline_lxx_dark">#1FFFFFFF</color>
  </resources>

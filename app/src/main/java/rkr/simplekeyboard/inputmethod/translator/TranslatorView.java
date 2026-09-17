@@ -41,21 +41,23 @@ public class TranslatorView extends FrameLayout {
     }
 
     private void init(Context context) {
-        setBackgroundColor(0xFF1E1E1E);
+        final rkr.simplekeyboard.inputmethod.keyboard.PanelTheme theme =
+                rkr.simplekeyboard.inputmethod.keyboard.PanelTheme.resolve(context);
+        theme.applyPanelBackground(this);
         LinearLayout root = new LinearLayout(context);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setPadding(16, 16, 16, 16);
 
         TextView title = new TextView(context);
         title.setText("🌐 Translate");
-        title.setTextColor(0xFFFFFFFF);
+        title.setTextColor(theme.onSurface);
         title.setTextSize(18);
         root.addView(title);
 
         mInput = new EditText(context);
         mInput.setHint("Text to translate…");
-        mInput.setTextColor(0xFFFFFFFF);
-        mInput.setHintTextColor(0xFFAAAAAA);
+        mInput.setTextColor(theme.onSurface);
+        mInput.setHintTextColor(theme.onSurfaceVariant);
         mInput.setMinLines(3);
         root.addView(mInput);
 
@@ -74,7 +76,7 @@ public class TranslatorView extends FrameLayout {
         langs.addView(mFrom);
         TextView arrow = new TextView(context);
         arrow.setText(" → ");
-        arrow.setTextColor(0xFFFFFFFF);
+        arrow.setTextColor(theme.onSurface);
         langs.addView(arrow);
         langs.addView(mTo);
         root.addView(langs);
@@ -85,7 +87,7 @@ public class TranslatorView extends FrameLayout {
         root.addView(mTranslateBtn);
 
         mOutput = new TextView(context);
-        mOutput.setTextColor(0xFFB2FF59);
+        mOutput.setTextColor(theme.accent);
         mOutput.setTextSize(16);
         mOutput.setPadding(0, 12, 0, 12);
         mOutput.setMinHeight(80);
