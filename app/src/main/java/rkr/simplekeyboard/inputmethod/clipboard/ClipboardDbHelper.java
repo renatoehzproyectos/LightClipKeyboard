@@ -10,10 +10,11 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public final class ClipboardDbHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "lightclip_clipboard.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     public static final String TABLE_ITEMS = "clipboard_items";
-    public static final String TABLE_GROUPS = "groups";
+    // "groups" is a reserved keyword in modern SQLite, so the table is named explicitly.
+    public static final String TABLE_GROUPS = "clip_groups";
     public static final String TABLE_ITEM_GROUPS = "item_groups";
 
     public ClipboardDbHelper(Context context) {
@@ -51,7 +52,24 @@ public final class ClipboardDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Future migrations
+        if (oldVersion < 2) {
+            // v1 used the reserved table name "groups"; rebuild the group tables.
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEM_GROUPS);
+            db.execSQL("DROP TABLE IF EXISTS groups");
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_GROUPS);
+            db.execSQL("CREATE TABLE " + TABLE_GROUPS + " (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "name TEXT NOT NULL UNIQUE," +
+                    "created INTEGER NOT NULL" +
+                    ")");
+            db.execSQL("CREATE TABLE " + TABLE_ITEM_GROUPS + " (" +
+                    "item_id INTEGER NOT NULL," +
+                    "group_id INTEGER NOT NULL," +
+                    "PRIMARY KEY(item_id, group_id)," +
+                    "FOREIGN KEY(item_id) REFERENCES " + TABLE_ITEMS + "(id) ON DELETE CASCADE," +
+                    "FOREIGN KEY(group_id) REFERENCES " + TABLE_GROUPS + "(id) ON DELETE CASCADE" +
+                    ")");
+        }
     }
 
     @Override

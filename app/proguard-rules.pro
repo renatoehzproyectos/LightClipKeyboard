@@ -20,3 +20,17 @@
 -keep class rkr.simplekeyboard.inputmethod.latin.settings.SettingsFragment
 -keep class rkr.simplekeyboard.inputmethod.latin.settings.LanguagesSettingsFragment
 -keep class rkr.simplekeyboard.inputmethod.latin.settings.SingleLanguageSettingsFragment
+
+# Fragments and preference/view classes are instantiated by name from XML/reflection.
+-keep class rkr.simplekeyboard.inputmethod.latin.settings.** { *; }
+-keep class rkr.simplekeyboard.inputmethod.latin.LatinIME { *; }
+-keep class rkr.simplekeyboard.inputmethod.latin.SystemBroadcastReceiver { *; }
+-keepclassmembers class * extends android.view.View {
+    public <init>(android.content.Context);
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+-keepclassmembers class * extends android.preference.Preference {
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}

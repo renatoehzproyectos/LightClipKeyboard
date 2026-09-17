@@ -271,9 +271,16 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         filter.addAction(AudioManager.RINGER_MODE_CHANGED_ACTION);
         registerReceiver(mRingerModeChangeReceiver, filter);
 
-        // Lightweight clipboard history capture (lazy, low overhead)
-        mClipboardCapture = new rkr.simplekeyboard.inputmethod.clipboard.ClipboardCaptureHelper(this);
-        mClipboardCapture.startListening();
+        // Lightweight clipboard history capture (lazy, low overhead). This must never be able
+        // to take the whole input method down: storage can be unavailable before first unlock.
+        try {
+            mClipboardCapture =
+                    new rkr.simplekeyboard.inputmethod.clipboard.ClipboardCaptureHelper(this);
+            mClipboardCapture.startListening();
+        } catch (Throwable t) {
+            Log.w(TAG, "Clipboard capture could not be started", t);
+            mClipboardCapture = null;
+        }
     }
 
     private void loadSettings() {
@@ -288,7 +295,11 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     @Override
     public void onDestroy() {
         if (mClipboardCapture != null) {
-            mClipboardCapture.stopListening();
+            try {
+                mClipboardCapture.stopListening();
+            } catch (Throwable t) {
+                Log.w(TAG, "Clipboard capture could not be stopped", t);
+            }
             mClipboardCapture = null;
         }
         mSettings.onDestroy();

@@ -29,8 +29,26 @@ public final class ClipboardRepository {
     private String mLastCapturedText; // avoid exact duplicates
 
     private ClipboardRepository(Context context) {
-        mDbHelper = new ClipboardDbHelper(context.getApplicationContext());
-        mPrefs = context.getApplicationContext().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        // Always use device-protected storage: the IME service is directBootAware and can be
+        // created before the user unlocks the device, where credential-protected storage (the
+        // default) is unavailable and throws, killing the service on startup.
+        final Context storageContext = getStorageContext(context);
+        mDbHelper = new ClipboardDbHelper(storageContext);
+        mPrefs = storageContext.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+    }
+
+    private static Context getStorageContext(final Context context) {
+        final Context appContext = context.getApplicationContext() != null
+                ? context.getApplicationContext() : context;
+        try {
+            final Context deviceContext = appContext.createDeviceProtectedStorageContext();
+            if (deviceContext != null) {
+                return deviceContext;
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "Device protected storage unavailable", e);
+        }
+        return appContext;
     }
 
     public static synchronized ClipboardRepository getInstance(Context context) {

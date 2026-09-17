@@ -54,14 +54,26 @@ public class EmojiPickerView extends FrameLayout {
 
     public EmojiPickerView(Context context) {
         super(context);
-        mPrefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        mPrefs = prefsContext(context).getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         init(context);
     }
 
     public EmojiPickerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mPrefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        mPrefs = prefsContext(context).getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         init(context);
+    }
+
+    private static Context prefsContext(final Context context) {
+        // Direct-boot safe: credential protected storage is unavailable before first unlock.
+        try {
+            final Context deviceContext = context.createDeviceProtectedStorageContext();
+            if (deviceContext != null) {
+                return deviceContext;
+            }
+        } catch (Exception ignored) {
+        }
+        return context;
     }
 
     private void init(Context context) {
