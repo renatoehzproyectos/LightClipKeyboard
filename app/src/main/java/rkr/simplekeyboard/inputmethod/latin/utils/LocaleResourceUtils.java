@@ -69,22 +69,48 @@ public final class LocaleResourceUtils {
         final Resources res = context.getResources();
         sResources = res;
 
+        // The application id can differ from the package that holds {@link R} (e.g. when the app
+        // is rebranded), so try the runtime package name first and fall back to the R package.
+        final String appPackageName = context.getPackageName();
+
         final String[] exceptionalLocaleInRootLocale = res.getStringArray(
                 R.array.locale_displayed_in_root_locale);
         for (int i = 0; i < exceptionalLocaleInRootLocale.length; i++) {
             final String localeString = exceptionalLocaleInRootLocale[i];
             final String resourceName = LOCALE_NAME_RESOURCE_IN_ROOT_LOCALE_PREFIX + localeString;
-            final int resId = res.getIdentifier(resourceName, null, RESOURCE_PACKAGE_NAME);
-            sExceptionalLocaleDisplayedInRootLocale.put(localeString, resId);
+            final int resId = resolveResId(res, resourceName, appPackageName);
+            if (resId != 0) {
+                sExceptionalLocaleDisplayedInRootLocale.put(localeString, resId);
+            }
         }
 
         final String[] exceptionalLocales = res.getStringArray(R.array.locale_exception_keys);
         for (int i = 0; i < exceptionalLocales.length; i++) {
             final String localeString = exceptionalLocales[i];
             final String resourceName = LOCALE_NAME_RESOURCE_PREFIX + localeString;
-            final int resId = res.getIdentifier(resourceName, null, RESOURCE_PACKAGE_NAME);
-            sExceptionalLocaleToNameIdsMap.put(localeString, resId);
+            final int resId = resolveResId(res, resourceName, appPackageName);
+            if (resId != 0) {
+                sExceptionalLocaleToNameIdsMap.put(localeString, resId);
+            }
         }
+    }
+
+    private static int resolveResId(final Resources res, final String resourceName,
+                                    final String appPackageName) {
+        int resId = 0;
+        try {
+            resId = res.getIdentifier(resourceName, null, appPackageName);
+        } catch (Exception e) {
+            // Ignore and try the other package name.
+        }
+        if (resId == 0 && !appPackageName.equals(RESOURCE_PACKAGE_NAME)) {
+            try {
+                resId = res.getIdentifier(resourceName, null, RESOURCE_PACKAGE_NAME);
+            } catch (Exception e) {
+                resId = 0;
+            }
+        }
+        return resId;
     }
 
     private static Locale getDisplayLocale(final String localeString) {
@@ -164,11 +190,14 @@ public final class LocaleResourceUtils {
             exceptionalNameResId = null;
         }
 
-        if (exceptionalNameResId != null) {
-            return sResources.getString(exceptionalNameResId);
-        } else {
-            return LocaleUtils.constructLocaleFromString(localeString)
-                    .getDisplayName(displayLocale);
+        if (exceptionalNameResId != null && exceptionalNameResId != 0) {
+            try {
+                return sResources.getString(exceptionalNameResId);
+            } catch (Resources.NotFoundException e) {
+                // Fall through to the generic locale display name below.
+            }
         }
+        return LocaleUtils.constructLocaleFromString(localeString)
+                .getDisplayName(displayLocale);
     }
 }
