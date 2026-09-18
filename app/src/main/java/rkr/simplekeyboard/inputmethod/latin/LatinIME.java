@@ -52,6 +52,7 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import rkr.simplekeyboard.inputmethod.R;
 import rkr.simplekeyboard.inputmethod.compat.EditorInfoCompatUtils;
 import rkr.simplekeyboard.inputmethod.compat.PreferenceManagerCompat;
 import rkr.simplekeyboard.inputmethod.event.Event;
