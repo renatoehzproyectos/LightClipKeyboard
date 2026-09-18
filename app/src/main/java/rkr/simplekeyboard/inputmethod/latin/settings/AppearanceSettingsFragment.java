@@ -39,11 +39,52 @@ public final class AppearanceSettingsFragment extends SubScreenFragment {
         setupKeyboardHeightSettings();
         setupBottomOffsetPortraitSettings();
         setupKeyboardColorSettings();
+        setupThemePresets();
+    }
+
+    /** Theme presets (Master Plan §26). */
+    private void setupThemePresets() {
+        final Preference pref = findPreference("pref_theme_presets");
+        if (pref == null) {
+            return;
+        }
+        pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(final Preference preference) {
+                final Context context = getActivity();
+                if (context == null) {
+                    return true;
+                }
+                new android.app.AlertDialog.Builder(context)
+                        .setTitle(R.string.settings_theme_presets)
+                        .setItems(ThemePresets.names(),
+                                new android.content.DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final android.content.DialogInterface dialog,
+                                    final int which) {
+                                ThemePresets.apply(ThemePresets.PRESETS[which],
+                                        getSharedPreferences());
+                                refreshPreview();
+                            }
+                        })
+                        .show();
+                return true;
+            }
+        });
+    }
+
+    /** Re-draws the live theme preview (Master Plan §25). */
+    private void refreshPreview() {
+        final Preference preview = findPreference("pref_theme_preview");
+        if (preview instanceof KeyboardPreviewPreference) {
+            ((KeyboardPreviewPreference) preview).refresh();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        refreshPreview();
 
         ThemeSettingsFragment.updateKeyboardThemeSummary(findPreference(Settings.SCREEN_THEME));
 
@@ -57,6 +98,7 @@ public final class AppearanceSettingsFragment extends SubScreenFragment {
 
     @Override
     public void onSharedPreferenceChanged(final SharedPreferences prefs, final String key) {
+        refreshPreview();
         if (KeyboardTheme.KEYBOARD_THEME_KEY.equals(key)) {
             ThemeSettingsFragment.updateKeyboardThemeSummary(findPreference(Settings.SCREEN_THEME));
 

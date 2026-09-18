@@ -27,6 +27,7 @@
         <item>@string/keyboard_theme_dark</item>
         <item>@string/keyboard_theme_light_border</item>
         <item>@string/keyboard_theme_dark_border</item>
+        <item>@string/keyboard_theme_amoled</item>
     </string-array>
 
     <integer-array name="keyboard_theme_ids" translatable="false">
@@ -36,6 +37,7 @@
         <item>4</item>
         <item>1</item>
         <item>2</item>
+        <item>7</item>
     </integer-array>
 
     <string-array name="keyboard_theme_ids_string" translatable="false">
@@ -45,6 +47,7 @@
         <item>4</item>
         <item>1</item>
         <item>2</item>
+        <item>7</item>
     </string-array>
 
     <array name="keyboard_theme_colors" translatable="false">
@@ -54,5 +57,6 @@
         <item>@color/background_lxx_dark</item>
         <item>@color/background_lxx_light</item>
         <item>@color/background_lxx_dark</item>
+        <item>@color/background_lxx_amoled</item>
     </array>
 </resources>

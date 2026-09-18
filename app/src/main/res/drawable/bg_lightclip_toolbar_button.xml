@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 LightClipKeyboard. Licensed under the Apache License, Version 2.0. -->
+<!-- LightClip toolbar button press feedback (Master Plan §3 Layer 2).
+     Reuses the same theme-aware pressed/normal attrs as regular keys so the
+     toolbar automatically matches Dark/Light/AMOLED/System without new
+     per-theme color wiring. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="?attr/keyPressedBackgroundColor" />
+            <corners android:radius="@dimen/button_corner_radius_lxx" />
+        </shape>
+    </item>
+    <item android:drawable="@android:color/transparent" />
+</selector>

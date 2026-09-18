@@ -46,12 +46,15 @@ public class TranslatorView extends FrameLayout {
         theme.applyPanelBackground(this);
         LinearLayout root = new LinearLayout(context);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setPadding(16, 16, 16, 16);
+        final int pad = theme.dp(16);
+        root.setPadding(pad, pad, pad, pad);
 
         TextView title = new TextView(context);
-        title.setText("🌐 Translate");
+        title.setText("Translate");
         title.setTextColor(theme.onSurface);
         title.setTextSize(18);
+        title.setTypeface(android.graphics.Typeface.DEFAULT_BOLD);
+        title.setPadding(0, 0, 0, theme.dp(8));
         root.addView(title);
 
         mInput = new EditText(context);
@@ -59,6 +62,9 @@ public class TranslatorView extends FrameLayout {
         mInput.setTextColor(theme.onSurface);
         mInput.setHintTextColor(theme.onSurfaceVariant);
         mInput.setMinLines(3);
+        mInput.setGravity(android.view.Gravity.TOP | android.view.Gravity.START);
+        mInput.setBackground(theme.outlinedRoundRect(theme.surface, 12f));
+        mInput.setPadding(theme.dp(12), theme.dp(10), theme.dp(12), theme.dp(10));
         root.addView(mInput);
 
         LinearLayout langs = new LinearLayout(context);
@@ -83,6 +89,9 @@ public class TranslatorView extends FrameLayout {
 
         mTranslateBtn = new Button(context);
         mTranslateBtn.setText("Translate");
+        mTranslateBtn.setAllCaps(false);
+        mTranslateBtn.setTextColor(theme.onAccent);
+        mTranslateBtn.setBackground(theme.pressable(theme.accent, theme.accentPressed, 14f));
         mTranslateBtn.setOnClickListener(v -> doTranslate());
         root.addView(mTranslateBtn);
 
@@ -95,6 +104,9 @@ public class TranslatorView extends FrameLayout {
 
         Button insert = new Button(context);
         insert.setText("Insert result");
+        insert.setAllCaps(false);
+        insert.setTextColor(theme.onSurface);
+        insert.setBackground(theme.pressable(theme.surface, theme.surfacePressed, 14f));
         insert.setOnClickListener(v -> {
             CharSequence t = mOutput.getText();
             if (t != null && t.length() > 0 && mListener != null) {
@@ -104,7 +116,10 @@ public class TranslatorView extends FrameLayout {
         root.addView(insert);
 
         Button close = new Button(context);
-        close.setText("✕ Close");
+        close.setText("Close");
+        close.setAllCaps(false);
+        close.setTextColor(theme.onSurfaceVariant);
+        close.setBackground(theme.pressable(theme.functionalSurface, theme.surfacePressed, 14f));
         close.setOnClickListener(v -> {
             if (mListener != null) mListener.onClose();
         });

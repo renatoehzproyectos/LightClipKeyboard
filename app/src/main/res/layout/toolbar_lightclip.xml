@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  LightClip Toolbar — Master Plan §3 Layer 2, §12 (icons), §13 (toolbar).
+
+  A dedicated productivity strip sitting between the contextual strip
+  (Layer 1, @id/lightclip_strip) and the primary keyboard (Layer 3).
+  Uses the LightClip vector icon set (@drawable/ic_lc_*) tinted with the
+  active theme's functional text color, so it matches Dark / Light /
+  AMOLED / Material You without per-theme wiring.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lightclip_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/lightclip_toolbar_height"
+    android:orientation="horizontal"
+    android:background="?attr/popupPanelBackgroundColor"
+    android:paddingLeft="@dimen/lightclip_toolbar_padding_horizontal"
+    android:paddingRight="@dimen/lightclip_toolbar_padding_horizontal"
+    android:gravity="center_vertical">
+
+    <LinearLayout
+        android:id="@+id/lightclip_toolbar_smart"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/bg_lightclip_toolbar_button"
+        android:contentDescription="@string/lightclip_toolbar_smart">
+
+        <ImageView
+            android:layout_width="@dimen/lightclip_toolbar_icon_size"
+            android:layout_height="@dimen/lightclip_toolbar_icon_size"
+            android:src="@drawable/ic_lc_smart"
+            android:tint="?attr/functionalTextColor"
+            android:contentDescription="@null"
+            android:layout_marginEnd="@dimen/lightclip_toolbar_icon_label_gap" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lightclip_toolbar_smart"
+            android:textSize="@dimen/lightclip_toolbar_label_size"
+            android:textColor="?attr/functionalTextColor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lightclip_toolbar_clipboard"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/bg_lightclip_toolbar_button"
+        android:contentDescription="@string/lightclip_toolbar_clipboard">
+
+        <ImageView
+            android:layout_width="@dimen/lightclip_toolbar_icon_size"
+            android:layout_height="@dimen/lightclip_toolbar_icon_size"
+            android:src="@drawable/ic_lc_clipboard"
+            android:tint="?attr/functionalTextColor"
+            android:contentDescription="@null"
+            android:layout_marginEnd="@dimen/lightclip_toolbar_icon_label_gap" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lightclip_toolbar_clipboard"
+            android:textSize="@dimen/lightclip_toolbar_label_size"
+            android:textColor="?attr/functionalTextColor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lightclip_toolbar_emoji"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/bg_lightclip_toolbar_button"
+        android:contentDescription="@string/lightclip_toolbar_emoji">
+
+        <ImageView
+            android:layout_width="@dimen/lightclip_toolbar_icon_size"
+            android:layout_height="@dimen/lightclip_toolbar_icon_size"
+            android:src="@drawable/ic_lc_emoji"
+            android:tint="?attr/functionalTextColor"
+            android:contentDescription="@null"
+            android:layout_marginEnd="@dimen/lightclip_toolbar_icon_label_gap" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lightclip_toolbar_emoji"
+            android:textSize="@dimen/lightclip_toolbar_label_size"
+            android:textColor="?attr/functionalTextColor" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/lightclip_toolbar_more"
+        android:layout_width="@dimen/lightclip_toolbar_more_width"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        android:src="@drawable/ic_lc_more"
+        android:tint="?attr/functionalTextColor"
+        android:background="@drawable/bg_lightclip_toolbar_button"
+        android:contentDescription="@string/lightclip_toolbar_more" />
+
+</LinearLayout>

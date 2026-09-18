@@ -66,6 +66,8 @@ public class ClipboardView extends FrameLayout {
     private LinearLayout mChips;
     private ScrollView mScroll;
     private TextView mTitle;
+    private EditText mSearch;
+    private String mQuery = "";
     private long mFilter = FILTER_ALL; // >= 0 means a group id
 
     public ClipboardView(Context context) {
@@ -127,6 +129,47 @@ public class ClipboardView extends FrameLayout {
         alp.setMargins(mTheme.dp(8), 0, mTheme.dp(4), 0);
         header.addView(add, alp);
         root.addView(header);
+
+        // Search bar (Master Plan §Phase 4: "🔍 Search clipboard...").
+        final LinearLayout searchRow = new LinearLayout(context);
+        searchRow.setOrientation(LinearLayout.HORIZONTAL);
+        searchRow.setGravity(Gravity.CENTER_VERTICAL);
+        searchRow.setBackground(mTheme.roundRect(mTheme.functionalSurface, 18));
+        final LinearLayout.LayoutParams searchRowLp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, mTheme.dp(36));
+        searchRowLp.setMargins(mTheme.dp(12), mTheme.dp(4), mTheme.dp(12), mTheme.dp(8));
+        searchRow.setLayoutParams(searchRowLp);
+        searchRow.setPadding(mTheme.dp(12), 0, mTheme.dp(12), 0);
+
+        final TextView searchIcon = new TextView(context);
+        searchIcon.setText("\uD83D\uDD0D"); // 🔍
+        searchIcon.setTextSize(13);
+        searchIcon.setTextColor(mTheme.onSurfaceVariant);
+        searchRow.addView(searchIcon, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        mSearch = new EditText(context);
+        mSearch.setHint("Search clipboard...");
+        mSearch.setHintTextColor(mTheme.onSurfaceVariant);
+        mSearch.setTextColor(mTheme.onSurface);
+        mSearch.setTextSize(14);
+        mSearch.setSingleLine(true);
+        mSearch.setBackground(null);
+        mSearch.setPadding(mTheme.dp(8), 0, 0, 0);
+        mSearch.setInputType(InputType.TYPE_CLASS_TEXT
+                | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        mSearch.addTextChangedListener(new android.text.TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int st, int c, int a) {}
+            @Override public void onTextChanged(CharSequence s, int st, int b, int c) {}
+            @Override public void afterTextChanged(android.text.Editable s) {
+                mQuery = s.toString().trim();
+                refresh();
+            }
+        });
+        final LinearLayout.LayoutParams searchInputLp = new LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
+        searchRow.addView(mSearch, searchInputLp);
+        root.addView(searchRow);
 
         // Card grid.
         mScroll = new ScrollView(context);
@@ -221,6 +264,19 @@ public class ClipboardView extends FrameLayout {
         } else {
             items.addAll(mRepo.getByGroup(mFilter));
             emptyText = "This group is empty.";
+        }
+
+        if (!mQuery.isEmpty()) {
+            final List<ClipboardItem> filtered = new ArrayList<>();
+            final String needle = mQuery.toLowerCase();
+            for (final ClipboardItem it : items) {
+                if (it.text != null && it.text.toLowerCase().contains(needle)) {
+                    filtered.add(it);
+                }
+            }
+            items.clear();
+            items.addAll(filtered);
+            emptyText = "No results for \u201c" + mQuery + "\u201d";
         }
 
         if (items.isEmpty()) {

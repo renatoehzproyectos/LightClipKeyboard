@@ -2,18 +2,21 @@
 <!-- Copyright 2026 LightClipKeyboard. Licensed under the Apache License, Version 2.0. -->
 <resources>
     <!-- Color resources for LXX_System theme (dark mode, pre Android 12). -->
-    <color name="background_lxx_system">#FF1E1F22</color>
-    <color name="background_secondary_lxx_system">#FF3A3C41</color>
-    <color name="key_text_color_lxx_system">#FFF1F2F4</color>
-    <color name="key_functional_text_color_lxx_system">#FFDDE0E5</color>
-    <color name="key_text_inactive_color_lxx_system">#8AF1F2F4</color>
-    <color name="key_hint_letter_color_lxx_system">#80F1F2F4</color>
-    <color name="key_background_normal_lxx_system">#FF3A3C41</color>
-    <color name="key_background_pressed_lxx_system">#FF56595F</color>
-    <color name="key_functional_background_lxx_system">#FF2B2D31</color>
-    <color name="key_accent_background_lxx_system">#FFA8C7FA</color>
-    <color name="key_accent_pressed_background_lxx_system">#FF7CACF8</color>
-    <color name="key_on_accent_lxx_system">#FF062E6F</color>
-    <color name="panel_surface_lxx_system">#FF2B2D31</color>
-    <color name="panel_outline_lxx_system">#1FFFFFFF</color>
+    <!-- LightClip v9: matches the warm charcoal palette used by LXX_Dark
+         (Master Plan §5–6), so "System" and "Dark" are visually identical
+         when the device is in dark mode, as intended. -->
+    <color name="background_lxx_system">#FF11110F</color>
+    <color name="background_secondary_lxx_system">#FF24231F</color>
+    <color name="key_text_color_lxx_system">#FFF5F1E8</color>
+    <color name="key_functional_text_color_lxx_system">#FFB0ACA1</color>
+    <color name="key_text_inactive_color_lxx_system">#FF77736A</color>
+    <color name="key_hint_letter_color_lxx_system">#70B0ACA1</color>
+    <color name="key_background_normal_lxx_system">#FF292821</color>
+    <color name="key_background_pressed_lxx_system">#FF36342D</color>
+    <color name="key_functional_background_lxx_system">#FF22211C</color>
+    <color name="key_accent_background_lxx_system">#FF8AB4F8</color>
+    <color name="key_accent_pressed_background_lxx_system">#FF6C97D6</color>
+    <color name="key_on_accent_lxx_system">#FF11110F</color>
+    <color name="panel_surface_lxx_system">#FF1D1C18</color>
+    <color name="panel_outline_lxx_system">#1FF5F1E8</color>
 </resources>

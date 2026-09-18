@@ -21,6 +21,9 @@ The workflow is the same proven one used by ProjectCenter (JDK 17 + official cmd
 
 ## Features
 
+- Three-layer keyboard UI: contextual action strip, tools toolbar, keys
+- Contextual actions (copy / cut / paste / select all / translate)
+- Live theme preview and one-tap theme presets
 - Lossless clipboard history (never truncates text)
 - User groups, notes, pinning, search
 - SmartPasteEngine for large texts (chunked, boundary-aware)

@@ -405,6 +405,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         // also wouldn't be consuming gesture data.
         final KeyboardSwitcher switcher = mKeyboardSwitcher;
         switcher.updateKeyboardTheme();
+        switcher.updateContextStrip(false);
         final MainKeyboardView mainKeyboardView = switcher.getMainKeyboardView();
         // If we are starting input in a different text field from before, we'll have to reload
         // settings, so currentSettingsValues can't be final.
@@ -628,6 +629,67 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         showLightClipPanel(view);
     }
 
+    /**
+     * Smart tools (Master Plan §13): opens the translator panel in the same
+     * panel host used by clipboard and emoji.
+     */
+    public void showTranslatorPanel() {
+        if (isLightClipPanelShowing()) {
+            hideLightClipPanel();
+            return;
+        }
+        final rkr.simplekeyboard.inputmethod.translator.TranslatorView view =
+                new rkr.simplekeyboard.inputmethod.translator.TranslatorView(this);
+        view.setListener(new rkr.simplekeyboard.inputmethod.translator.TranslatorView.Listener() {
+            @Override
+            public void onInsertTranslation(final String text) {
+                final android.view.inputmethod.InputConnection ic = getCurrentInputConnection();
+                if (ic != null && text != null) {
+                    rkr.simplekeyboard.inputmethod.paste.SmartPasteEngine.paste(ic, text, null);
+                }
+                hideLightClipPanel();
+            }
+
+            @Override
+            public void onClose() {
+                hideLightClipPanel();
+            }
+        });
+        showLightClipPanel(view);
+    }
+
+    /**
+     * Contextual strip actions (Master Plan §3 Layer 1, §14). These reuse the
+     * platform text context-menu actions so they behave exactly like the
+     * system ones in every app.
+     */
+    public void onStripAction(final int action) {
+        final android.view.inputmethod.InputConnection ic = getCurrentInputConnection();
+        if (action == rkr.simplekeyboard.inputmethod.keyboard.LightClipStripView.ACTION_TRANSLATE) {
+            showTranslatorPanel();
+            return;
+        }
+        if (ic == null) {
+            return;
+        }
+        switch (action) {
+        case rkr.simplekeyboard.inputmethod.keyboard.LightClipStripView.ACTION_COPY:
+            ic.performContextMenuAction(android.R.id.copy);
+            break;
+        case rkr.simplekeyboard.inputmethod.keyboard.LightClipStripView.ACTION_CUT:
+            ic.performContextMenuAction(android.R.id.cut);
+            break;
+        case rkr.simplekeyboard.inputmethod.keyboard.LightClipStripView.ACTION_PASTE:
+            ic.performContextMenuAction(android.R.id.paste);
+            break;
+        case rkr.simplekeyboard.inputmethod.keyboard.LightClipStripView.ACTION_SELECT_ALL:
+            ic.performContextMenuAction(android.R.id.selectAll);
+            break;
+        default:
+            break;
+        }
+    }
+
     protected void deallocateMemory() {
         mKeyboardSwitcher.deallocateMemory();
     }
@@ -646,6 +708,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         Log.i(TAG, "Update Selection. Cursor position = " + newSelStart + "," + newSelEnd);
 
         mInputLogic.onUpdateSelection(newSelStart, newSelEnd);
+        mKeyboardSwitcher.updateContextStrip(newSelStart != newSelEnd);
         if (isInputViewShown()) {
             mInputLogic.reloadTextCache();
 

@@ -20,6 +20,9 @@
 <merge
     xmlns:latin="http://schemas.android.com/apk/res-auto"
     >
+    <!-- LightClip v9: widened to absorb the width freed by moving Emoji/Clipboard
+         out of the bottom row into the toolbar (Master Plan §3), so the enter
+         key doesn't grow via fillRight instead. -->
     <switch>
         <case
             latin:languageSwitchKeyEnabled="true"
@@ -29,12 +32,12 @@
                 latin:keyWidth="10%p" />
             <Key
                 latin:keyStyle="spaceKeyStyle"
-                latin:keyWidth="20%p" />
+                latin:keyWidth="42%p" />
         </case>
         <default>
             <Key
                 latin:keyStyle="spaceKeyStyle"
-                latin:keyWidth="30%p" />
+                latin:keyWidth="52%p" />
         </default>
     </switch>
 </merge>

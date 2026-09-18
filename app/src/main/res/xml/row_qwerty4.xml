@@ -27,12 +27,6 @@
         <Key
             latin:keyStyle="toSymbolKeyStyle"
             latin:keyWidth="13%p" />
-        <Key
-            latin:keyStyle="emojiKeyStyle"
-            latin:keyWidth="11%p" />
-        <Key
-            latin:keyStyle="clipboardKeyStyle"
-            latin:keyWidth="11%p" />
         <include
             latin:keyboardLayout="@xml/key_comma" />
         <include

@@ -363,6 +363,20 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
         }
     }
 
+    private LightClipStripView mStripView;
+
+    /** Layer 1 strip (Master Plan §3). May be null before the input view is created. */
+    public LightClipStripView getStripView() {
+        return mStripView;
+    }
+
+    /** Updates the contextual strip for the current editor state (Master Plan §14). */
+    public void updateContextStrip(final boolean hasSelection) {
+        if (mStripView != null) {
+            mStripView.setSelectionState(hasSelection);
+        }
+    }
+
     public View onCreateInputView() {
         if (mKeyboardView != null) {
             mKeyboardView.closing();
@@ -375,6 +389,59 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions {
 
         mKeyboardView = currentInputView.findViewById(R.id.keyboard_view);
         mKeyboardView.setKeyboardActionListener(mLatinIME);
+        bindLightClipToolbar(currentInputView);
+        bindLightClipStrip(currentInputView);
         return currentInputView;
+    }
+
+    /**
+     * Wires the LightClip toolbar (Master Plan §3, Layer 2) to the same
+     * {@link KeyboardActionListener} the main keyboard uses, so Clipboard and
+     * Emoji reuse the exact existing code paths (LatinIME#onCodeInput ->
+     * Constants.CODE_CLIPBOARD / CODE_EMOJI) instead of new plumbing.
+     * "Smart" has no destination yet (no Smart tools feature exists in this
+     * build), so it's intentionally a no-op placeholder rather than routed
+     * somewhere misleading.
+     */
+    private void bindLightClipToolbar(final View inputView) {
+        final View clipboardButton = inputView.findViewById(R.id.lightclip_toolbar_clipboard);
+        if (clipboardButton != null) {
+            clipboardButton.setOnClickListener(v -> mLatinIME.onCodeInput(
+                    rkr.simplekeyboard.inputmethod.latin.common.Constants.CODE_CLIPBOARD,
+                    rkr.simplekeyboard.inputmethod.latin.common.Constants.NOT_A_COORDINATE,
+                    rkr.simplekeyboard.inputmethod.latin.common.Constants.NOT_A_COORDINATE,
+                    false));
+        }
+        final View emojiButton = inputView.findViewById(R.id.lightclip_toolbar_emoji);
+        if (emojiButton != null) {
+            emojiButton.setOnClickListener(v -> mLatinIME.onCodeInput(
+                    rkr.simplekeyboard.inputmethod.latin.common.Constants.CODE_EMOJI,
+                    rkr.simplekeyboard.inputmethod.latin.common.Constants.NOT_A_COORDINATE,
+                    rkr.simplekeyboard.inputmethod.latin.common.Constants.NOT_A_COORDINATE,
+                    false));
+        }
+        final View moreButton = inputView.findViewById(R.id.lightclip_toolbar_more);
+        if (moreButton != null) {
+            moreButton.setOnClickListener(v -> mLatinIME.onCodeInput(
+                    rkr.simplekeyboard.inputmethod.latin.common.Constants.CODE_SETTINGS,
+                    rkr.simplekeyboard.inputmethod.latin.common.Constants.NOT_A_COORDINATE,
+                    rkr.simplekeyboard.inputmethod.latin.common.Constants.NOT_A_COORDINATE,
+                    false));
+        }
+        final View smartButton = inputView.findViewById(R.id.lightclip_toolbar_smart);
+        if (smartButton != null) {
+            smartButton.setOnClickListener(v -> mLatinIME.showTranslatorPanel());
+        }
+    }
+
+    /**
+     * Wires the contextual strip (Master Plan §3 Layer 1, §14) to LatinIME so its
+     * chips act on the current input connection.
+     */
+    private void bindLightClipStrip(final View inputView) {
+        mStripView = inputView.findViewById(R.id.lightclip_strip);
+        if (mStripView != null) {
+            mStripView.setListener(action -> mLatinIME.onStripAction(action));
+        }
     }
 }

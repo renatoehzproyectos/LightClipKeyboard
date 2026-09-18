@@ -29,29 +29,38 @@
     <color name="key_text_color_lxx_system">#FF1B1C1E</color>
     <color name="key_functional_text_color_lxx_system">#FF3C3F43</color>
     <color name="key_text_inactive_color_lxx_system">#8A1B1C1E</color>
-    <color name="key_hint_letter_color_lxx_system">#7A1B1C1E</color>
+    <color name="key_hint_letter_color_lxx_system">#661B1C1E</color>
     <color name="key_background_normal_lxx_system">#FFFFFFFF</color>
     <color name="key_background_pressed_lxx_system">#FFD9DCE1</color>
     <!-- Color resources for LXX_Light theme. -->
-    <color name="background_lxx_light">#FFEEF0F3</color>
+    <!-- LightClip v9: warm white background (Master Plan §6) replacing the
+         cool blue-gray Material default. -->
+    <color name="background_lxx_light">#FFFBF9F4</color>
     <color name="background_secondary_lxx_light">#FFFFFFFF</color>
-    <color name="key_text_color_lxx_light">#FF1B1C1E</color>
-    <color name="key_functional_text_color_lxx_light">#FF3C3F43</color>
-    <color name="key_text_inactive_color_lxx_light">#8A1B1C1E</color>
-    <color name="key_hint_letter_color_lxx_light">#7A1B1C1E</color>
-    <color name="key_background_normal_lxx_light">#F2FFFFFF</color>
-    <color name="key_background_pressed_lxx_light">#40000000</color>
+    <color name="key_text_color_lxx_light">#FF211F1A</color>
+    <color name="key_functional_text_color_lxx_light">#FF5C584F</color>
+    <color name="key_text_inactive_color_lxx_light">#FF8F8B80</color>
+    <color name="key_hint_letter_color_lxx_light">#705C584F</color>
+    <color name="key_background_normal_lxx_light">#FFFFFFFF</color>
+    <color name="key_background_pressed_lxx_light">#FFE8E4D9</color>
     <!-- Color resources for LXX_Dark theme. -->
-    <color name="background_lxx_dark">#FF1E1F22</color>
-    <color name="background_secondary_lxx_dark">#FF3A3C41</color>
-    <color name="key_text_color_lxx_dark">#FFF1F2F4</color>
-    <color name="key_functional_text_color_lxx_dark">#FFDDE0E5</color>
-    <color name="key_text_inactive_color_lxx_dark">#8AF1F2F4</color>
-    <color name="key_hint_letter_color_lxx_dark">#80F1F2F4</color>
-    <color name="key_background_normal_lxx_dark">#33FFFFFF</color>
-    <color name="key_background_pressed_lxx_dark">#66FFFFFF</color>
+    <!-- LightClip v9: warm charcoal palette (Master Plan §5), replacing the
+         generic blue-gray Material dark values above. Token mapping:
+           background_lxx_dark           <- backgroundPrimary
+           background_secondary_lxx_dark <- surfaceElevated
+           key_background_normal_lxx_dark  <- keyNormal (now opaque, not a white-alpha wash)
+           key_background_pressed_lxx_dark <- keyPressed
+           key_text_*                      <- textPrimary / textSecondary / textTertiary -->
+    <color name="background_lxx_dark">#FF11110F</color>
+    <color name="background_secondary_lxx_dark">#FF24231F</color>
+    <color name="key_text_color_lxx_dark">#FFF5F1E8</color>
+    <color name="key_functional_text_color_lxx_dark">#FFB0ACA1</color>
+    <color name="key_text_inactive_color_lxx_dark">#FF77736A</color>
+    <color name="key_hint_letter_color_lxx_dark">#70B0ACA1</color>
+    <color name="key_background_normal_lxx_dark">#FF292821</color>
+    <color name="key_background_pressed_lxx_dark">#FF36342D</color>
     <!-- Dimensions for all themes. -->
-    <dimen name="button_corner_radius_lxx">10dp</dimen>
+    <dimen name="button_corner_radius_lxx">12dp</dimen>
     <dimen name="key_preview_corner_radius_lxx">14dp</dimen>
     <dimen name="panel_corner_radius">16dp</dimen>
 
@@ -63,17 +72,40 @@
     <color name="panel_surface_lxx_system">#FFFFFFFF</color>
     <color name="panel_outline_lxx_system">#1F1B1C1E</color>
 
-    <color name="key_functional_background_lxx_light">#40000000</color>
-    <color name="key_accent_background_lxx_light">#FF0B57D0</color>
-    <color name="key_accent_pressed_background_lxx_light">#FF0842A0</color>
+    <color name="key_functional_background_lxx_light">#FFEFEBE1</color>
+    <color name="key_accent_background_lxx_light">#FF3B6FD9</color>
+    <color name="key_accent_pressed_background_lxx_light">#FF2E58AE</color>
     <color name="key_on_accent_lxx_light">#FFFFFFFF</color>
-    <color name="panel_surface_lxx_light">#B3FFFFFF</color>
-    <color name="panel_outline_lxx_light">#1F000000</color>
+    <color name="panel_surface_lxx_light">#FFFFFFFF</color>
+    <color name="panel_outline_lxx_light">#1F211F1A</color>
 
-    <color name="key_functional_background_lxx_dark">#1AFFFFFF</color>
-    <color name="key_accent_background_lxx_dark">#FFA8C7FA</color>
-    <color name="key_accent_pressed_background_lxx_dark">#FF7CACF8</color>
-    <color name="key_on_accent_lxx_dark">#FF062E6F</color>
-    <color name="panel_surface_lxx_dark">#1AFFFFFF</color>
-    <color name="panel_outline_lxx_dark">#1FFFFFFF</color>
+    <color name="key_functional_background_lxx_dark">#FF22211C</color>
+    <color name="key_accent_background_lxx_dark">#FF8AB4F8</color>
+    <color name="key_accent_pressed_background_lxx_dark">#FF6C97D6</color>
+    <color name="key_on_accent_lxx_dark">#FF11110F</color>
+    <color name="panel_surface_lxx_dark">#FF1D1C18</color>
+    <color name="panel_outline_lxx_dark">#1FF5F1E8</color>
+
+    <!-- LightClip semantic status colors (Master Plan §5), theme-independent. -->
+    <color name="lc_error">#E5484D</color>
+    <color name="lc_success">#3DD68C</color>
+    <color name="lc_divider_dark">#2A2924</color>
+
+    <!-- Color resources for LXX_Amoled theme (Master Plan §6): true/near-black
+         background, dark keys, minimal surface contrast. Accent and text
+         tokens are shared with LXX_Dark; only surfaces darken further. -->
+    <color name="background_lxx_amoled">#FF000000</color>
+    <color name="background_secondary_lxx_amoled">#FF0B0B09</color>
+    <color name="key_text_color_lxx_amoled">#FFF5F1E8</color>
+    <color name="key_functional_text_color_lxx_amoled">#FF9C988E</color>
+    <color name="key_text_inactive_color_lxx_amoled">#FF605D55</color>
+    <color name="key_hint_letter_color_lxx_amoled">#709C988E</color>
+    <color name="key_background_normal_lxx_amoled">#FF141311</color>
+    <color name="key_background_pressed_lxx_amoled">#FF201F1B</color>
+    <color name="key_functional_background_lxx_amoled">#FF0E0D0B</color>
+    <color name="key_accent_background_lxx_amoled">#FF8AB4F8</color>
+    <color name="key_accent_pressed_background_lxx_amoled">#FF6C97D6</color>
+    <color name="key_on_accent_lxx_amoled">#FF000000</color>
+    <color name="panel_surface_lxx_amoled">#FF0B0B09</color>
+    <color name="panel_outline_lxx_amoled">#1FF5F1E8</color>
  </resources>

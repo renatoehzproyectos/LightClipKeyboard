@@ -51,12 +51,21 @@
     <fraction name="config_key_letter_ratio_lxx">58%</fraction>
     <fraction name="config_key_large_letter_ratio_lxx">90%</fraction>
     <fraction name="config_key_label_ratio_lxx">36%</fraction>
-    <fraction name="config_key_hint_letter_ratio_lxx">22%</fraction>
+    <fraction name="config_key_hint_letter_ratio_lxx">19%</fraction>
     <fraction name="config_key_hint_label_ratio_lxx">28%</fraction>
     <fraction name="config_key_shifted_letter_hint_ratio_lxx">35%</fraction>
     <fraction name="config_language_on_spacebar_text_ratio">33.735%</fraction>
     <dimen name="config_key_hint_letter_padding">3dp</dimen>
     <dimen name="config_key_shifted_letter_hint_padding">2dp</dimen>
+
+    <!-- LightClip toolbar (Master Plan §3, Layer 2). -->
+    <dimen name="lightclip_strip_height">40dp</dimen>
+    <dimen name="lightclip_toolbar_height">44dp</dimen>
+    <dimen name="lightclip_toolbar_padding_horizontal">4dp</dimen>
+    <dimen name="lightclip_toolbar_icon_size">18dp</dimen>
+    <dimen name="lightclip_toolbar_label_size">13sp</dimen>
+    <dimen name="lightclip_toolbar_icon_label_gap">6dp</dimen>
+    <dimen name="lightclip_toolbar_more_width">44dp</dimen>
 
     <dimen name="config_more_keys_keyboard_top_padding">0dp</dimen>
     <dimen name="config_more_keys_keyboard_bottom_padding">0dp</dimen>

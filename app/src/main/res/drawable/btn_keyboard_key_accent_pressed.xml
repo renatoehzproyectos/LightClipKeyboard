@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2026 LightClipKeyboard. Licensed under the Apache License, Version 2.0. -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="?attr/keyAccentPressedBackgroundColor" />
-    <corners android:radius="@dimen/button_corner_radius_lxx" />
-</shape>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="3dp"
+    android:insetTop="4dp"
+    android:insetRight="3dp"
+    android:insetBottom="4dp">
+    <shape android:shape="rectangle">
+        <solid android:color="?attr/keyAccentPressedBackgroundColor" />
+        <corners android:radius="@dimen/button_corner_radius_lxx" />
+    </shape>
+</inset>

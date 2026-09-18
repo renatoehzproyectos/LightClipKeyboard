@@ -24,12 +24,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="?attr/inputViewStyle">
-    <rkr.simplekeyboard.inputmethod.keyboard.MainKeyboardView
-        android:id="@+id/keyboard_view"
-        android:layoutDirection="ltr"
-        android:layout_gravity="bottom"
-        android:orientation="vertical"
-        android:fitsSystemWindows="true"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+        <!-- Layer 1: contextual actions -->
+        <rkr.simplekeyboard.inputmethod.keyboard.LightClipStripView
+            android:id="@+id/lightclip_strip"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/lightclip_strip_height" />
+        <!-- Layer 2: tools toolbar -->
+        <include layout="@layout/toolbar_lightclip" />
+        <!-- Layer 3: keyboard -->
+        <rkr.simplekeyboard.inputmethod.keyboard.MainKeyboardView
+            android:id="@+id/keyboard_view"
+            android:layoutDirection="ltr"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </rkr.simplekeyboard.inputmethod.latin.InputView>

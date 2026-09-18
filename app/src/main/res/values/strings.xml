@@ -90,6 +90,17 @@
     <string name="keyboard_theme_light" translatable="false">Light</string>
     <string name="keyboard_theme_system" translatable="false">Material You (System)</string>
     <string name="keyboard_theme_system_border" translatable="false">Material You Border</string>
+    <string name="keyboard_theme_amoled" translatable="false">AMOLED</string>
+
+    <!-- LightClip toolbar (Master Plan §3, Layer 2). -->
+    <string name="lightclip_toolbar_smart">Smart</string>
+    <string name="lightclip_toolbar_clipboard">Clipboard</string>
+    <string name="lightclip_toolbar_emoji">Emoji</string>
+    <string name="lightclip_toolbar_more">More</string>
+    <string name="lightclip_toolbar_icon_smart" translatable="false">✨</string>
+    <string name="lightclip_toolbar_icon_clipboard" translatable="false">📋</string>
+    <string name="lightclip_toolbar_icon_emoji" translatable="false">😊</string>
+    <string name="lightclip_toolbar_icon_more" translatable="false">⋯</string>
 
     <!-- Title of the button to add a language in the settings dialog [CHAR LIMIT=15] -->
     <string name="add">Add</string>
@@ -127,4 +138,23 @@
     <string name="change_keyboard">Change keyboard</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="license">License</string>
+    <!-- LightClip contextual strip (Master Plan §3 Layer 1, §14). -->
+    <string name="lightclip_action_copy">Copy</string>
+    <string name="lightclip_action_cut">Cut</string>
+    <string name="lightclip_action_paste">Paste</string>
+    <string name="lightclip_action_select_all">Select all</string>
+    <string name="lightclip_action_translate">Translate</string>
+    <!-- LightClip settings (Master Plan §23, §24, §26). -->
+    <string name="settings_category_keyboard">Keyboard</string>
+    <string name="settings_category_personalization">Personalization</string>
+    <string name="settings_category_about">About</string>
+    <string name="settings_screen_preferences_summary">Languages, number row, swipe gestures</string>
+    <string name="settings_screen_key_press_summary">Sound, vibration, popup and long press</string>
+    <string name="settings_screen_appearance_summary">Theme, colors, height and layout</string>
+    <string name="settings_theme_preview">Preview</string>
+    <string name="settings_theme_preview_summary">Live preview of the current theme</string>
+    <string name="settings_theme_presets">Theme presets</string>
+    <string name="settings_theme_presets_summary">One-tap looks built from the LightClip design system</string>
+    <string name="privacy_policy_summary">How LightClip handles your data</string>
+    <string name="license_summary">Open source licenses</string>
 </resources>
