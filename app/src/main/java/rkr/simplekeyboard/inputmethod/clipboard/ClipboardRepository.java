@@ -114,6 +114,13 @@ public final class ClipboardRepository {
         db.update(ClipboardDbHelper.TABLE_ITEMS, cv, "id=?", new String[]{String.valueOf(id)});
     }
 
+    public void setNote(long id, boolean isNote) {
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("is_note", isNote ? 1 : 0);
+        db.update(ClipboardDbHelper.TABLE_ITEMS, cv, "id=?", new String[]{String.valueOf(id)});
+    }
+
     public void delete(long id) {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         db.delete(ClipboardDbHelper.TABLE_ITEMS, "id=?", new String[]{String.valueOf(id)});

@@ -21,12 +21,14 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.IBinder;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -110,6 +112,20 @@ public class ClipboardView extends FrameLayout {
                 LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
         csp.setMargins(mTheme.dp(12), 0, 0, 0);
         header.addView(chipScroll, csp);
+
+        // "+" button: create a note or a group.
+        final TextView add = new TextView(context);
+        add.setText("+");
+        add.setTextSize(20);
+        add.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        add.setTextColor(mTheme.onAccent);
+        add.setGravity(Gravity.CENTER);
+        add.setBackground(mTheme.pressable(mTheme.accent, mTheme.surfacePressed, 18));
+        add.setContentDescription("New note or group");
+        add.setOnClickListener(v -> showAddChooser());
+        final LinearLayout.LayoutParams alp = new LinearLayout.LayoutParams(mTheme.dp(36), mTheme.dp(36));
+        alp.setMargins(mTheme.dp(8), 0, mTheme.dp(4), 0);
+        header.addView(add, alp);
         root.addView(header);
 
         // Card grid.
@@ -306,7 +322,12 @@ public class ClipboardView extends FrameLayout {
     private void showItemActions(final ClipboardItem item) {
         final AlertDialog.Builder b = new AlertDialog.Builder(getContext());
         b.setTitle(item.getPreview(40));
-        final String[] actions = { "Paste", item.pinned ? "Unpin" : "Pin", "Delete" };
+        final String[] actions = {
+                "Paste",
+                item.pinned ? "Unpin" : "Pin",
+                item.isNote ? "Remove note" : "Save as note",
+                "Move to group\u2026",
+                "Delete" };
         b.setItems(actions, (d, which) -> {
             switch (which) {
                 case 0:
@@ -317,13 +338,95 @@ public class ClipboardView extends FrameLayout {
                     refresh();
                     break;
                 case 2:
+                    mRepo.setNote(item.id, !item.isNote);
+                    refresh();
+                    break;
+                case 3:
+                    showGroupPicker(item);
+                    break;
+                case 4:
                     mRepo.delete(item.id);
                     refresh();
                     break;
             }
         });
-        final AlertDialog dialog = b.create();
-        // Dialogs opened from an IME must be attached to the keyboard window.
+        showAttached(b.create());
+    }
+
+    private void showAddChooser() {
+        final AlertDialog.Builder b = new AlertDialog.Builder(getContext());
+        b.setTitle("Create");
+        b.setItems(new String[] { "New note\u2026", "New group\u2026" }, (d, which) -> {
+            if (which == 0) {
+                showTextInput("New note", "Note text", text -> {
+                    mRepo.addNote(text);
+                    mFilter = FILTER_NOTES;
+                    refresh();
+                });
+            } else {
+                showTextInput("New group", "Group name", name -> {
+                    final long id = mRepo.createGroup(name);
+                    if (id >= 0) {
+                        mFilter = id;
+                        refresh();
+                    }
+                });
+            }
+        });
+        showAttached(b.create());
+    }
+
+    private interface TextCallback {
+        void onText(String text);
+    }
+
+    private void showTextInput(final String title, final String hint, final TextCallback cb) {
+        final Context context = getContext();
+        final EditText input = new EditText(context);
+        input.setHint(hint);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        input.setSingleLine(true);
+        final int pad = mTheme.dp(20);
+        final FrameLayout wrap = new FrameLayout(context);
+        wrap.setPadding(pad, mTheme.dp(12), pad, 0);
+        wrap.addView(input);
+        final AlertDialog.Builder b = new AlertDialog.Builder(context);
+        b.setTitle(title);
+        b.setView(wrap);
+        b.setPositiveButton("Save", (d, w) -> {
+            final String text = input.getText().toString().trim();
+            if (!text.isEmpty()) cb.onText(text);
+        });
+        b.setNegativeButton("Cancel", null);
+        showAttached(b.create());
+    }
+
+    private void showGroupPicker(final ClipboardItem item) {
+        final List<ClipboardGroup> groups = mRepo.getAllGroups();
+        final String[] names = new String[groups.size() + 1];
+        for (int i = 0; i < groups.size(); i++) names[i] = groups.get(i).name;
+        names[groups.size()] = "New group\u2026";
+        final AlertDialog.Builder b = new AlertDialog.Builder(getContext());
+        b.setTitle("Move to group");
+        b.setItems(names, (d, which) -> {
+            if (which == groups.size()) {
+                showTextInput("New group", "Group name", name -> {
+                    final long id = mRepo.createGroup(name);
+                    if (id >= 0) {
+                        mRepo.moveItemToGroup(item.id, id);
+                        refresh();
+                    }
+                });
+            } else {
+                mRepo.moveItemToGroup(item.id, groups.get(which).id);
+                refresh();
+            }
+        });
+        showAttached(b.create());
+    }
+
+    /** Dialogs opened from an IME must be attached to the keyboard window. */
+    private void showAttached(final AlertDialog dialog) {
         final Window w = dialog.getWindow();
         final IBinder token = getWindowToken();
         if (w != null && token != null) {
