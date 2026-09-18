@@ -748,12 +748,22 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
             outInsets.visibleTopInsets = inputHeight;
             return;
         }
-        final int visibleTopY = inputHeight - visibleKeyboardView.getHeight();
+        // The LightClip contextual strip (Layer 1) and tools toolbar (Layer 2) sit ABOVE the
+        // keyboard view inside the same input view. Using only the keyboard view's height here
+        // would leave those rows outside the IME's touchable region, so every tap on them would
+        // fall through to the app behind the keyboard. Take the topmost visible LightClip row
+        // into account instead.
+        int visibleTopY = inputHeight - visibleKeyboardView.getHeight();
+        visibleTopY = Math.min(visibleTopY, topInInputView(mInputView.findViewById(R.id.lightclip_strip)));
+        visibleTopY = Math.min(visibleTopY, topInInputView(mInputView.findViewById(R.id.lightclip_toolbar)));
+        if (visibleTopY < 0) {
+            visibleTopY = 0;
+        }
         // Need to set expanded touchable region only if a keyboard view is being shown.
         if (visibleKeyboardView.isShown()) {
             final int touchLeft = 0;
             final int touchTop = mKeyboardSwitcher.isShowingMoreKeysPanel() ? 0 : visibleTopY;
-            final int touchRight = visibleKeyboardView.getWidth();
+            final int touchRight = Math.max(visibleKeyboardView.getWidth(), mInputView.getWidth());
             final int touchBottom = inputHeight
                     // Extend touchable region below the keyboard.
                     + EXTENDED_TOUCHABLE_REGION_HEIGHT;
@@ -763,6 +773,23 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
         outInsets.contentTopInsets = visibleTopY;
         outInsets.visibleTopInsets = visibleTopY;
     }
+
+    /**
+     * Vertical offset of {@code view} relative to the IME input view, or
+     * {@link Integer#MAX_VALUE} when the view is absent or not visible.
+     */
+    private int topInInputView(final View view) {
+        if (view == null || mInputView == null || view.getVisibility() != View.VISIBLE
+                || view.getHeight() <= 0) {
+            return Integer.MAX_VALUE;
+        }
+        final int[] viewLocation = new int[2];
+        final int[] inputLocation = new int[2];
+        view.getLocationInWindow(viewLocation);
+        mInputView.getLocationInWindow(inputLocation);
+        return viewLocation[1] - inputLocation[1];
+    }
+
 
     @Override
     public boolean onShowInputRequested(final int flags, final boolean configChange) {
